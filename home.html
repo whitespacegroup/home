@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Whitespace Group | Elite Roblox Development</title>
+    <link href="https://unpkg.com/lucide@latest/dist/lucide.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #418ac8;
+            --primary-light: #5da2e8;
+            --dark: #1a1a1a;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --gray-light: #e9ecef;
+            --bg: #ffffff;
+            --text: #1a1a1a;
+            --card-bg: #ffffff;
+            --header-bg: rgba(255, 255, 255, 0.98);
+            --shadow: 0 4px 30px rgba(0,0,0,0.05);
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --section-spacing: 12rem;
+            --border-radius: 12px;
+            --max-width: 1440px;
+        }
+        
+        .dark-mode {
+            --primary: #5da2e8;
+            --primary-light: #7db8ff;
+            --dark: #f8f9fa;
+            --light: #121212;
+            --gray: #a0a0a0;
+            --gray-light: #2a2a2a;
+            --bg: #121212;
+            --text: #f8f9fa;
+            --card-bg: #1e1e1e;
+            --header-bg: rgba(30, 30, 30, 0.98);
+            --shadow: 0 4px 30px rgba(0,0,0,0.2);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            transition: var(--transition);
+            overflow-x: hidden;
+        }
+        
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+        }
+        
+        h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+        }
+        
+        h3 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+        }
+        
+        p {
+            font-size: 1.1rem;
+            color: var(--gray);
+            max-width: 65ch;
+        }
+        
+        /* Layout */
+        .container {
+            width: 100%;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        section {
+            padding: var(--section-spacing) 0;
+            position: relative;
+        }
+        
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--header-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 100;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            transition: var(--transition);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+        
+        .header-logo:hover {
+            color: var(--primary-light);
+        }
+        
+        .header-logo img {
+            width: 2rem;
+            height: 2rem;
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .header-logo:hover img {
+            transform: rotate(15deg);
+        }
+        
+        .header-nav {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-link {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: var(--transition);
+            opacity: 0.9;
+        }
+        
+        .nav-link:hover {
+            opacity: 1;
+            color: var(--primary);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -0.25rem;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.75rem;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(65, 138, 200, 0.3);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(65, 138, 200, 0.4);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 6rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+        
+        .hero-title {
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.1;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.25rem;
+            margin-bottom: 2.5rem;
+            color: var(--gray);
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+        
+        .hero-decoration {
+            position: absolute;
+            width: 60vw;
+            height: 60vw;
+            max-width: 800px;
+            max-height: 800px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(65, 138, 200, 0.1) 0%, rgba(65, 138, 200, 0) 70%);
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .decoration-1 {
+            top: -20%;
+            right: -20%;
+            animation: float 12s infinite ease-in-out;
+        }
+        
+        .decoration-2 {
+            bottom: -30%;
+            left: -20%;
+            animation: float 15s infinite ease-in-out reverse;
+        }
+        
+        /* Section Titles */
+        .section-title {
+            text-align: center;
+            margin-bottom: 5rem;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 4rem;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
+            margin: 1.5rem auto 0;
+            border-radius: 2px;
+        }
+        
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+        
+        .feature-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
+            opacity: 0;
+            transition: var(--transition);
+        }
+        
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+        
+        .feature-icon {
+            width: 3rem;
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(65, 138, 200, 0.1);
+            border-radius: 50%;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .feature-icon i {
+            font-size: 1.5rem;
+        }
+        
+        .feature-title {
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        
+        /* Skills Visualization */
+        .skills-visualization {
+            margin: 6rem auto;
+            max-width: 800px;
+            position: relative;
+            height: 400px;
+        }
+        
+        .skill-orbit {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 1px dashed rgba(65, 138, 200, 0.2);
+            animation: rotate 60s linear infinite;
+        }
+        
+        .skill-node {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background-color: var(--card-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow);
+            border: 2px solid var(--primary);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .skill-node:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 25px rgba(65, 138, 200, 0.3);
+        }
+        
+        .skill-node i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .skill-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(65, 138, 200, 0.4);
+        }
+        
+        /* How It Works */
+        .how-it-works {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+            position: relative;
+        }
+        
+        .step {
+            display: flex;
+            gap: 2rem;
+            position: relative;
+            padding-left: 4rem;
+        }
+        
+        .step::before {
+            content: '';
+            position: absolute;
+            left: 2rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--primary), var(--primary-light));
+            opacity: 0.2;
+        }
+        
+        .step:last-child::before {
+            display: none;
+        }
+        
+        .step-number {
+            position: absolute;
+            left: 0;
+            width: 4rem;
+            height: 4rem;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(65, 138, 200, 0.3);
+        }
+        
+        .step-content {
+            flex: 1;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .step-content:hover {
+            transform: translateY(-5px);
+        }
+        
+        .step-title {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        /* Portfolio */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+        
+        .portfolio-item {
+            position: relative;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            aspect-ratio: 16/9;
+            transition: var(--transition);
+        }
+        
+        .portfolio-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .portfolio-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2rem;
+            opacity: 0;
+            transition: var(--transition);
+        }
+        
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+        
+        .portfolio-item:hover .portfolio-image {
+            transform: scale(1.05);
+        }
+        
+        .portfolio-title {
+            color: white;
+            margin-bottom: 0.5rem;
+            transform: translateY(20px);
+            transition: var(--transition);
+        }
+        
+        .portfolio-description {
+            color: rgba(255,255,255,0.8);
+            transform: translateY(20px);
+            transition: var(--transition);
+            transition-delay: 0.05s;
+        }
+        
+        .portfolio-item:hover .portfolio-title,
+        .portfolio-item:hover .portfolio-description {
+            transform: translateY(0);
+        }
+        
+        /* Testimonials */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+        
+        .testimonial-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: var(--transition);
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .testimonial-quote {
+            font-style: italic;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .testimonial-quote::before {
+            content: '"';
+            position: absolute;
+            top: -1rem;
+            left: -0.5rem;
+            font-size: 4rem;
+            color: var(--primary);
+            opacity: 0.1;
+            font-family: serif;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .author-avatar {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+        }
+        
+        .author-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .author-name {
+            font-weight: 600;
+        }
+        
+        .author-role {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border-radius: var(--border-radius);
+            padding: 6rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin: var(--section-spacing) 0;
+        }
+        
+        .cta-title {
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .cta-text {
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            color: rgba(255,255,255,0.9);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .cta-decoration {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            z-index: 1;
+        }
+        
+        .cta-decoration-1 {
+            top: -50px;
+            left: -50px;
+            animation: float 12s infinite ease-in-out;
+        }
+        
+        .cta-decoration-2 {
+            bottom: -50px;
+            right: -50px;
+            animation: float 15s infinite ease-in-out reverse;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--card-bg);
+            padding: 6rem 0 3rem;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+        
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-logo img {
+            width: 2rem;
+            height: 2rem;
+        }
+        
+        .footer-about {
+            max-width: 350px;
+        }
+        
+        .footer-links h3 {
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .social-link {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            background-color: var(--gray-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
+            transition: var(--transition);
+        }
+        
+        .social-link:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 3rem;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            color: var(--gray);
+        }
+        
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            :root {
+                --section-spacing: 8rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            :root {
+                --section-spacing: 6rem;
+            }
+            
+            .header-nav {
+                display: none;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+            }
+            
+            .step {
+                flex-direction: column;
+                padding-left: 0;
+                padding-top: 5rem;
+            }
+            
+            .step::before {
+                left: 2rem;
+                top: 0;
+                bottom: auto;
+                height: 3rem;
+                width: 2px;
+            }
+            
+            .step-number {
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            :root {
+                --section-spacing: 4rem;
+            }
+            
+            .container {
+                padding: 0 1.5rem;
+            }
+            
+            .hero {
+                padding-top: 8rem;
+            }
+            
+            .skills-visualization {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="#" class="header-logo">
+                <img src="https://media.discordapp.net/attachments/1383242037066731625/1385296057298325595/9e529037-627a-4773-b167-44da859876e3.png?ex=68558cfd&is=68543b7d&hm=75a6ff52cfa59830cbe9d2e70fa327be198740d3126f9301700d58e5bbd504f1&=&format=webp&quality=lossless&width=839&height=839" alt="The Whitespace Group Logo">
+                Whitespace
+            </a>
+            <nav class="header-nav">
+                <a href="#services" class="nav-link">Services</a>
+                <a href="#process" class="nav-link">Process</a>
+                <a href="#portfolio" class="nav-link">Work</a>
+                <a href="#testimonials" class="nav-link">Clients</a>
+                <a href="/developer-agreement.html" class="nav-link">Join Us</a>
+            </nav>
+            <div class="header-actions">
+                <button id="dark-mode-toggle" class="btn btn-outline" aria-label="Toggle dark mode">
+                    <i data-lucide="moon"></i>
+                </button>
+                <a href="/developer-agreement.html" class="btn btn-primary">Become a Developer</a>
+            </div>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="hero-decoration decoration-1"></div>
+        <div class="hero-decoration decoration-2"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Elite Roblox Development</h1>
+                <p class="hero-subtitle">The Whitespace Group curates the top 1% of Roblox talent, delivering premium development services for discerning clients.</p>
+                <div class="hero-buttons">
+                    <a href="#services" class="btn btn-primary">
+                        <i data-lucide="sparkles"></i>
+                        Explore Services
+                    </a>
+                    <a href="/developer-agreement.html" class="btn btn-outline">
+                        <i data-lucide="code"></i>
+                        Join Our Network
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="services" class="section">
+        <div class="container">
+            <h2 class="section-title">Premium Services</h2>
+            <p class="section-subtitle" style="text-align: center; margin-bottom: 3rem;">We deliver excellence across every aspect of Roblox development</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="box"></i>
+                    </div>
+                    <h3 class="feature-title">Full Game Development</h3>
+                    <p>End-to-end creation of premium Roblox experiences, from concept to launch and beyond.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="cuboid"></i>
+                    </div>
+                    <h3 class="feature-title">3D Modeling</h3>
+                    <p>Custom assets and environments crafted with meticulous attention to detail and optimization.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="layout-dashboard"></i>
+                    </div>
+                    <h3 class="feature-title">UI/UX Design</h3>
+                    <p>Intuitive interfaces that enhance player engagement and retention.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="code-2"></i>
+                    </div>
+                    <h3 class="feature-title">Advanced Scripting</h3>
+                    <p>Complex systems and mechanics built with optimized, maintainable code.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="bar-chart-2"></i>
+                    </div>
+                    <h3 class="feature-title">Monetization Strategy</h3>
+                    <p>Data-driven approaches to maximize revenue while maintaining player satisfaction.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="shield-check"></i>
+                    </div>
+                    <h3 class="feature-title">Security & Anti-Exploit</h3>
+                    <p>Protection against vulnerabilities to safeguard your game's integrity.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="section">
+        <div class="container">
+            <div class="skills-visualization">
+                <div class="skill-orbit"></div>
+                <div class="skill-node" style="top: 10%; left: 30%;">
+                    <i data-lucide="code-2"></i>
+                </div>
+                <div class="skill-node" style="top: 10%; right: 30%;">
+                    <i data-lucide="cuboid"></i>
+                </div>
+                <div class="skill-node" style="bottom: 10%; left: 30%;">
+                    <i data-lucide="palette"></i>
+                </div>
+                <div class="skill-node" style="bottom: 10%; right: 30%;">
+                    <i data-lucide="cpu"></i>
+                </div>
+                <div class="skill-node" style="top: 30%; left: 10%;">
+                    <i data-lucide="layout-dashboard"></i>
+                </div>
+                <div class="skill-node" style="top: 30%; right: 10%;">
+                    <i data-lucide="network"></i>
+                </div>
+                <div class="skill-node" style="bottom: 30%; left: 10%;">
+                    <i data-lucide="database"></i>
+                </div>
+                <div class="skill-node" style="bottom: 30%; right: 10%;">
+                    <i data-lucide="bar-chart-2"></i>
+                </div>
+                <div class="skill-center">
+                    <i data-lucide="star" style="margin-right: 0.5rem;"></i>
+                    Expertise
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="process" class="section">
+        <div class="container">
+            <h2 class="section-title">Our Process</h2>
+            <p class="section-subtitle" style="text-align: center; margin-bottom: 3rem;">A refined approach to delivering exceptional results</p>
+            
+            <div class="how-it-works">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Discovery</h3>
+                        <p>We begin with an in-depth consultation to understand your vision, goals, and technical requirements. This phase establishes the foundation for your project.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Talent Matching</h3>
+                        <p>Our team carefully selects the ideal developers from our network based on your project's specific needs, ensuring perfect alignment of skills and vision.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Development</h3>
+                        <p>With weekly updates and milestone reviews, we maintain transparency while our experts bring your vision to life with precision craftsmanship.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Refinement</h3>
+                        <p>We conduct rigorous testing and quality assurance, refining every detail until the product meets our exacting standards and your satisfaction.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Launch & Beyond</h3>
+                        <p>After deployment, we offer ongoing support and optimization to ensure your game continues to perform at its peak potential.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="portfolio" class="section">
+        <div class="container">
+            <h2 class="section-title">Selected Work</h2>
+            <p class="section-subtitle" style="text-align: center; margin-bottom: 3rem;">A showcase of our premium Roblox experiences</p>
+            
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <img src="https://tr.rbxcdn.com/1d8e3a4b0c6c7e8c3c8c9e4f5d6e7f8f/420/420/Image/Png" alt="Adventure Worlds" class="portfolio-image">
+                    <div class="portfolio-overlay">
+                        <h3 class="portfolio-title">Adventure Worlds</h3>
+                        <p class="portfolio-description">An expansive open-world RPG with quests and crafting systems</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="https://tr.rbxcdn.com/2d8e3a4b0c6c7e8c3c8c9e4f5d6e7f8f/420/420/Image/Png" alt="Tycoon Empire" class="portfolio-image">
+                    <div class="portfolio-overlay">
+                        <h3 class="portfolio-title">Tycoon Empire</h3>
+                        <p class="portfolio-description">Custom business simulation with unique progression</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="https://tr.rbxcdn.com/3d8e3a4b0c6c7e8c3c8c9e4f5d6e7f8f/420/420/Image/Png" alt="Obby Championship" class="portfolio-image">
+                    <div class="portfolio-overlay">
+                        <h3 class="portfolio-title">Obby Championship</h3>
+                        <p class="portfolio-description">Competitive obstacle course with leaderboards</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="testimonials" class="section">
+        <div class="container">
+            <h2 class="section-title">Client Experiences</h2>
+            <p class="section-subtitle" style="text-align: center; margin-bottom: 3rem;">What our partners say about working with us</p>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-quote">The Whitespace Group transformed our game concept into something beyond our expectations. Their attention to detail and technical expertise is unmatched in the Roblox space.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">JD</div>
+                        <div class="author-info">
+                            <div class="author-name">James Donovan</div>
+                            <div class="author-role">CEO, Adventure Studios</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-quote">Working with their developers was a revelation. The quality of work, communication, and professionalism exceeded every other team we've worked with on Roblox.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SM</div>
+                        <div class="author-info">
+                            <div class="author-name">Sarah Mitchell</div>
+                            <div class="author-role">Creative Director</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-quote">Their ability to understand complex requirements and deliver elegant solutions is why we continue to partner with The Whitespace Group for all our premium projects.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">TL</div>
+                        <div class="author-info">
+                            <div class="author-name">Thomas Lee</div>
+                            <div class="author-role">Head of Gaming</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <div class="container">
+        <div class="cta">
+            <div class="cta-decoration cta-decoration-1"></div>
+            <div class="cta-decoration cta-decoration-2"></div>
+            <h2 class="cta-title">Ready to Elevate Your Project?</h2>
+            <p class="cta-text">Connect with our team to discuss how we can bring your vision to life with premium Roblox development services.</p>
+            <div class="hero-buttons" style="justify-content: center;">
+                <a href="#contact" class="btn btn-primary">
+                    <i data-lucide="mail"></i>
+                    Contact Us
+                </a>
+                <a href="/developer-agreement.html" class="btn btn-outline" style="color: white; border-color: white;">
+                    <i data-lucide="code"></i>
+                    Join Our Network
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <img src="https://media.discordapp.net/attachments/1383242037066731625/1385296057298325595/9e529037-627a-4773-b167-44da859876e3.png?ex=68558cfd&is=68543b7d&hm=75a6ff52cfa59830cbe9d2e70fa327be198740d3126f9301700d58e5bbd504f1&=&format=webp&quality=lossless&width=839&height=839" alt="The Whitespace Group Logo">
+                        Whitespace
+                    </div>
+                    <p>Curating the top 1% of Roblox talent to deliver premium development services for discerning clients.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <i data-lucide="twitter"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i data-lucide="discord"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i data-lucide="github"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="#">Game Development</a></li>
+                        <li><a href="#">3D Modeling</a></li>
+                        <li><a href="#">UI/UX Design</a></li>
+                        <li><a href="#">Scripting</a></li>
+                        <li><a href="#">Consulting</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Our Process</a></li>
+                        <li><a href="#">Developer Network</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="/developer-agreement.html">Developer Agreement</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 The Whitespace Group. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        lucide.createIcons();
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Dark mode toggle
+            const darkModeToggle = document.getElementById('dark-mode-toggle');
+            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+            
+            // Check for saved theme preference or use system preference
+            if (localStorage.getItem('darkMode') === 'enabled' || 
+                (localStorage.getItem('darkMode') === null && prefersDarkScheme.matches)) {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.innerHTML = '<i data-lucide="sun"></i>';
+                lucide.createIcons();
+            }
+            
+            darkModeToggle.addEventListener('click', function() {
+                if (document.body.classList.contains('dark-mode')) {
+                    document.body.classList.remove('dark-mode');
+                    localStorage.setItem('darkMode', 'disabled');
+                    darkModeToggle.innerHTML = '<i data-lucide="moon"></i>';
+                } else {
+                    document.body.classList.add('dark-mode');
+                    localStorage.setItem('darkMode', 'enabled');
+                    darkModeToggle.innerHTML = '<i data-lucide="sun"></i>';
+                }
+                lucide.createIcons();
+            });
+            
+            // Animate skill nodes on scroll
+            const skillNodes = document.querySelectorAll('.skill-node');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'scale(1)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            skillNodes.forEach(node => {
+                node.style.opacity = '0';
+                node.style.transform = 'scale(0.5)';
+                node.style.transition = 'opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+                observer.observe(node);
+            });
+            
+            // Initialize skill nodes with staggered delay
+            skillNodes.forEach((node, index) => {
+                node.style.transitionDelay = `${index * 0.1}s`;
+            });
+        });
+    </script>
+</body>
+</html>
